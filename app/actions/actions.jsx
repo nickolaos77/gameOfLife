@@ -35,20 +35,14 @@ export const editRecAG = (recipeName, ingredients, recipeIndex) =>{
 }
 
 
-//Panel action generators
+//Next generation action generator
 //---------------------------------------
 
-export const expandPanelAG = recipeIndex => {
+export const nextGenAG = (boardState,numOfCols) => {
     return {
-        type : 'EXPAND_PANEL',
-        recipeIndex
-    }
-}
-
-export const contractPanelAG = recipeIndex => {
-    return {
-        type : 'CONTRACT_PANEL',
-        recipeIndex
+        type : 'CREATE_THE_NEXT_GEN',
+        boardState,
+        numOfCols
     }
 }
 

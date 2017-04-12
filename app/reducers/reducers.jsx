@@ -1,4 +1,4 @@
-
+import newStateCreator from './helperFunctions/gameLogic.js'
 
 //C.R.U.D. Recuder
 //----------------
@@ -47,18 +47,14 @@ export const crudRecReducer = (state = [], action)=>{
 //Panel Recuder 
 //--------------
 
-export const panelReducer = (state=[], action) => {
+export const newGenerationReducer = (state=[], action) => {
   switch (action.type){
-      case 'EXPAND_PANEL':
-          {//create a block of scope
-          let newState = state.concat({expanded:true, recipeIndex:action.recipeIndex});
-          return newState;
-          }
-      case 'CONTRACT_PANEL':
-          {//create a block of scope
-          let newState =state.filter(function(recipe){return recipe.recipeIndex !== action.recipeIndex})
-            return newState;
-          }
+      case 'CREATE_THE_NEXT_GEN':
+         
+          if (action.boardState){  
+            return newStateCreator(action.boardState,action.numOfCols)}
+          else {return newStateCreator(state,action.numOfCols)}  
+          
       default:
           return state;   
 }
@@ -67,7 +63,7 @@ export const panelReducer = (state=[], action) => {
 //Modal Recuder 
 //-------------//
 
-export const boardReducer = (state='MEDIUM_BOARD_SHOWING',action)=>{
+export const boardSizeReducer = (state='MEDIUM_BOARD_SHOWING',action)=>{
 switch (action.type){
         case 'SHOW_MEDIUM_BOARD':
             return 'MEDIUM_BOARD_SHOWING';

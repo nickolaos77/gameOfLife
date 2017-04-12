@@ -1,9 +1,10 @@
 var redux = require('redux');
-import {boardReducer} from './../reducers/reducers'; 
+import {boardSizeReducer, newGenerationReducer} from './../reducers/reducers'; 
 
 export const configure =()=>{
 const reducer = redux.combineReducers({
-    boardSize :  boardReducer,
+    boardSize :  boardSizeReducer,
+    boardState:  newGenerationReducer
     //recipes   :  crudRecReducer,
 });
  

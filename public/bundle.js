@@ -66,9 +66,11 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 	var redux = __webpack_require__(159);
-	var actions = __webpack_require__(211);
-	var store = __webpack_require__(212).configure();
+	var actions = __webpack_require__(212);
+	var store = __webpack_require__(213).configure();
 	//const RecipeAPI    =   require('./api/RecipeAPI.jsx')
 	//
 
@@ -84,31 +86,29 @@
 	//const unsubscribe = store.subscribe( ()=>{
 	//        let state = store.getState();
 	//        console.log("state", state);
-	//        RecipeAPI.setRecipes(state.recipes); 
+	//        
 	//    }
 	//);
 
 
-	//var initialRecipes = RecipeAPI.getRecipes();
-	//console.log("initialRecipes", initialRecipes)
-	//store.dispatch(actions.addRecipesAG(initialRecipes));
-	////check if this is the first rendering of the page
-	//var initialized = localStorage.getItem('initialized');
-	//if ( initialized !== 'initialized' ){
-	//  store.dispatch(actions.expandPanelAG(1));
-	//  store.dispatch(actions.addRecAG('makaronia', ['makaronia', 'saltsa ntomata']));
-	//  store.dispatch(actions.addRecAG('spanakoryzo', ['spanaki', 'ryzi']));
-	//  localStorage.setItem('initialized','initialized');
-	//}
-
-	// Create Actions
-
 	//Dispatch the actions
 	//
+
+	var newArray = [].concat(_toConsumableArray(Array(1500))).map(function () {
+	  return Math.random() > 0.5 ? 1 : 0;
+	});
+
 	store.dispatch(actions.showSmallBoardAG());
-	store.dispatch(actions.showMediumBoardAG());
-	store.dispatch(actions.showBigBoardAG());
-	//store.dispatch(actions.contractPanelAG(1));n
+
+	store.dispatch(actions.nextGenAG(newArray, 50));
+	store.dispatch(actions.nextGenAG(undefined, 50));
+
+	var counter = 0;
+	setInterval(function () {
+	  counter++;
+	  console.log(counter);
+	  store.dispatch(actions.nextGenAG(undefined, 50));
+	}, 20);
 
 /***/ },
 /* 1 */
@@ -22368,11 +22368,11 @@
 
 	var _Board2 = _interopRequireDefault(_Board);
 
-	var _TopButtons = __webpack_require__(209);
+	var _TopButtons = __webpack_require__(210);
 
 	var _TopButtons2 = _interopRequireDefault(_TopButtons);
 
-	var _BottomButtons = __webpack_require__(210);
+	var _BottomButtons = __webpack_require__(211);
 
 	var _BottomButtons2 = _interopRequireDefault(_BottomButtons);
 
@@ -22436,6 +22436,14 @@
 
 	var _reactRedux = __webpack_require__(180);
 
+	var _LivingCellsList = __webpack_require__(216);
+
+	var _LivingCellsList2 = _interopRequireDefault(_LivingCellsList);
+
+	var _Square = __webpack_require__(209);
+
+	var _Square2 = _interopRequireDefault(_Square);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -22446,8 +22454,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	//import Square           from './Square.jsx';
-	//const actions = require('../actions/actions.jsx');
+	var actions = __webpack_require__(212);
 
 	var Board = function (_React$Component) {
 	  _inherits(Board, _React$Component);
@@ -22457,10 +22464,18 @@
 
 	    var _this = _possibleConstructorReturn(this, (Board.__proto__ || Object.getPrototypeOf(Board)).call(this, props));
 
-	    _this.squareCreator = function (numOfSquares) {};
+	    _this.squareCreator = function (numOfSquares, className) {
+	      return [].concat(_toConsumableArray(Array(numOfSquares))).map(function (x, i) {
+	        return _react2.default.createElement(_Square2.default, { key: i, className: className });
+	      });
+	    };
+
+	    _this.squareCreator = _this.squareCreator.bind(_this);
 
 	    return _this;
 	  }
+	  //change to es5 function to make it testable
+
 
 	  _createClass(Board, [{
 	    key: 'render',
@@ -22469,27 +22484,22 @@
 	        return _react2.default.createElement(
 	          'div',
 	          { id: 'boardSmall' },
-	          [].concat(_toConsumableArray(Array(1500))).map(function (x, i) {
-	            return _react2.default.createElement('div', { key: i, className: 'square' });
-	          })
+	          this.squareCreator(1500, "square"),
+	          _react2.default.createElement(_LivingCellsList2.default, { boardState: this.props.boardState })
 	        );
 	      }
 	      if (this.props.boardSize === "MEDIUM_BOARD_SHOWING") {
 	        return _react2.default.createElement(
 	          'div',
 	          { id: 'boardMedium' },
-	          [].concat(_toConsumableArray(Array(3500))).map(function (x, i) {
-	            return _react2.default.createElement('div', { key: i, className: 'square' });
-	          })
+	          this.squareCreator(3500, "square")
 	        );
 	      }
 	      if (this.props.boardSize === "BIG_BOARD_SHOWING") {
 	        return _react2.default.createElement(
 	          'div',
 	          { id: 'boardBig' },
-	          [].concat(_toConsumableArray(Array(8000))).map(function (x, i) {
-	            return _react2.default.createElement('div', { key: i, className: 'squareSmall' });
-	          })
+	          this.squareCreator(8000, "squareSmall")
 	        );
 	      }
 	    }
@@ -22500,12 +22510,60 @@
 
 	module.exports = (0, _reactRedux.connect)(function (state) {
 	  return {
-	    boardSize: state.boardSize //now boardSize can be accesible inside the Board component as this.props.boardSize 
+	    boardSize: state.boardSize,
+	    boardState: state.boardState
+	    //now boardSize and boardState are available as this.props.boardSize and this.props.boardState
+
 	  };
 	})(Board);
 
 /***/ },
 /* 209 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Square = function (_React$Component) {
+	  _inherits(Square, _React$Component);
+
+	  function Square(props) {
+	    _classCallCheck(this, Square);
+
+	    return _possibleConstructorReturn(this, (Square.__proto__ || Object.getPrototypeOf(Square)).call(this, props));
+	  }
+
+	  _createClass(Square, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement('div', { key: this.props.key, className: this.props.className, style: this.props.style });
+	    }
+	  }]);
+
+	  return Square;
+	}(_react2.default.Component);
+
+	exports.default = Square;
+
+/***/ },
+/* 210 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22577,7 +22635,7 @@
 	exports.default = TopButtons;
 
 /***/ },
-/* 210 */
+/* 211 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22598,7 +22656,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var actions = __webpack_require__(211);
+	var actions = __webpack_require__(212);
 
 	var BottomButtons = function (_React$Component) {
 	  _inherits(BottomButtons, _React$Component);
@@ -22685,7 +22743,7 @@
 	module.exports = (0, _reactRedux.connect)()(BottomButtons);
 
 /***/ },
-/* 211 */
+/* 212 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -22728,20 +22786,14 @@
 	    };
 	};
 
-	//Panel action generators
+	//Next generation action generator
 	//---------------------------------------
 
-	var expandPanelAG = exports.expandPanelAG = function expandPanelAG(recipeIndex) {
+	var nextGenAG = exports.nextGenAG = function nextGenAG(boardState, numOfCols) {
 	    return {
-	        type: 'EXPAND_PANEL',
-	        recipeIndex: recipeIndex
-	    };
-	};
-
-	var contractPanelAG = exports.contractPanelAG = function contractPanelAG(recipeIndex) {
-	    return {
-	        type: 'CONTRACT_PANEL',
-	        recipeIndex: recipeIndex
+	        type: 'CREATE_THE_NEXT_GEN',
+	        boardState: boardState,
+	        numOfCols: numOfCols
 	    };
 	};
 
@@ -22767,7 +22819,7 @@
 	};
 
 /***/ },
-/* 212 */
+/* 213 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22777,12 +22829,14 @@
 	});
 	exports.configure = undefined;
 
-	var _reducers = __webpack_require__(213);
+	var _reducers = __webpack_require__(214);
 
 	var redux = __webpack_require__(159);
 	var configure = exports.configure = function configure() {
 	    var reducer = redux.combineReducers({
-	        boardSize: _reducers.boardReducer
+	        boardSize: _reducers.boardSizeReducer,
+	        boardState: _reducers.newGenerationReducer
+	        //recipes   :  crudRecReducer,
 	    });
 
 	    //redux.compose allow us to add middleware functions. Here I add a function to use the redux dev tools
@@ -22793,14 +22847,21 @@
 	};
 
 /***/ },
-/* 213 */
-/***/ function(module, exports) {
+/* 214 */
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.boardSizeReducer = exports.newGenerationReducer = exports.crudRecReducer = undefined;
+
+	var _gameLogic = __webpack_require__(215);
+
+	var _gameLogic2 = _interopRequireDefault(_gameLogic);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
@@ -22857,25 +22918,19 @@
 	//Panel Recuder 
 	//--------------
 
-	var panelReducer = exports.panelReducer = function panelReducer() {
+	var newGenerationReducer = exports.newGenerationReducer = function newGenerationReducer() {
 	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
 	    var action = arguments[1];
 
 	    switch (action.type) {
-	        case 'EXPAND_PANEL':
-	            {
-	                //create a block of scope
-	                var newState = state.concat({ expanded: true, recipeIndex: action.recipeIndex });
-	                return newState;
+	        case 'CREATE_THE_NEXT_GEN':
+
+	            if (action.boardState) {
+	                return (0, _gameLogic2.default)(action.boardState, action.numOfCols);
+	            } else {
+	                return (0, _gameLogic2.default)(state, action.numOfCols);
 	            }
-	        case 'CONTRACT_PANEL':
-	            {
-	                //create a block of scope
-	                var _newState3 = state.filter(function (recipe) {
-	                    return recipe.recipeIndex !== action.recipeIndex;
-	                });
-	                return _newState3;
-	            }
+
 	        default:
 	            return state;
 	    }
@@ -22884,7 +22939,7 @@
 	//Modal Recuder 
 	//-------------//
 
-	var boardReducer = exports.boardReducer = function boardReducer() {
+	var boardSizeReducer = exports.boardSizeReducer = function boardSizeReducer() {
 	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'MEDIUM_BOARD_SHOWING';
 	    var action = arguments[1];
 
@@ -22902,6 +22957,184 @@
 	            return state;
 	    }
 	};
+
+/***/ },
+/* 215 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = improvedStateCreator;
+
+	// Create randomly an initial array of alive or dead cells. The live ones are light red (young)
+	//Don't forget to test the reducers
+	//make if functional, use haskell notation
+
+	//console.log(newArray);
+	//var newArray = [...Array(36)].map( ()=>{
+	//  return Math.random() > 0.5 ? 1 : 0 ; 
+	//} );
+
+
+	//cellValueMapper::Number->Number
+	function cellValueMapper(el) {
+	  if (typeof el != "number") {
+	    return 0;
+	  }
+	  if (el == 0) {
+	    return 0;
+	  }
+	  if (el == 1) {
+	    return 1;
+	  } else {
+	    return 1;
+	  }
+	}
+
+	//countcountTheNeighborsOfEachCell::Array ,Number   ,Function->Array
+	function countTheNeighborsOfEachCell(oldState, numOfCols) {
+
+	  var cVM = function cellValueMapper(el) {
+	    if (typeof el != "number") {
+	      return 0;
+	    }
+	    if (el == 0) {
+	      return 0;
+	    }
+	    if (el == 1) {
+	      return 1;
+	    } else {
+	      return 1;
+	    }
+	  };
+
+	  var numberOfNeighborsArray = oldState.map(function numberOfNeighborsArrayCreator(elem, index) {
+	    //first row element
+	    if (index % numOfCols == 0) {
+	      return cVM(oldState[index - numOfCols]) + cVM(oldState[index + 1 - numOfCols]) + cVM(oldState[index + 1]) + cVM(oldState[index + numOfCols]) + cVM(oldState[index + 1 + numOfCols]);
+	    }
+	    //last row elements
+	    if ((index + 1) % numOfCols == 0) {
+	      return cVM(oldState[index - 1 - numOfCols]) + cVM(oldState[index - numOfCols]) + cVM(oldState[index - 1]) + cVM(oldState[index - 1 + numOfCols]) + cVM(oldState[index + numOfCols]);
+	    }
+	    //elements of the middle rows
+	    else return cVM(oldState[index - 1 - numOfCols]) + cVM(oldState[index - numOfCols]) + cVM(oldState[index + 1 - numOfCols]) + cVM(oldState[index - 1]) + cVM(oldState[index + 1]) + cVM(oldState[index - 1 + numOfCols]) + cVM(oldState[index + numOfCols]) + cVM(oldState[index + 1 + numOfCols]);
+	  });
+	  return [oldState, numberOfNeighborsArray];
+	};
+
+	function newStateCreator(argArray) {
+	  var oldState = argArray[0];
+	  var numberOfNeighborsArray = argArray[1];
+	  var newState = oldState.map(function createTheNewState(el, index) {
+	    if ((el == 1 || el == 2) && (numberOfNeighborsArray[index] == 0 || numberOfNeighborsArray[index] == 1)) {
+	      return 0;
+	    }
+	    if ((el == 1 || el == 2) && (numberOfNeighborsArray[index] == 2 || numberOfNeighborsArray[index] == 3)) {
+	      return 2;
+	    }
+	    if ((el == 1 || el == 2) && numberOfNeighborsArray[index] >= 4) {
+	      return 0;
+	    }
+	    if (el == 0 && numberOfNeighborsArray[index] == 3) {
+	      return 1;
+	    }
+	    if (el == 0 && numberOfNeighborsArray[index] != 3) {
+	      return 0;
+	    }
+	  });
+	  return newState;
+	}
+
+	//for (var i=0; i<5; i++){
+	//  console.log(oldState)
+	//  var oldState = newStateCreator(countTheNeighborsOfEachCell(oldState,6))
+	//}
+
+	function improvedStateCreator(oldState, numOfCols) {
+	  return newStateCreator(countTheNeighborsOfEachCell(oldState, numOfCols));
+	}
+
+/***/ },
+/* 216 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Square = __webpack_require__(209);
+
+	var _Square2 = _interopRequireDefault(_Square);
+
+	var _reactRedux = __webpack_require__(180);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var LivingCellsList = function (_React$Component) {
+	  _inherits(LivingCellsList, _React$Component);
+
+	  function LivingCellsList(props) {
+	    _classCallCheck(this, LivingCellsList);
+
+	    var _this = _possibleConstructorReturn(this, (LivingCellsList.__proto__ || Object.getPrototypeOf(LivingCellsList)).call(this, props));
+
+	    _this.youngCells = _this.youngCells.bind(_this);
+	    return _this;
+	  }
+
+	  _createClass(LivingCellsList, [{
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      console.log('Component is mounting...');
+	    }
+
+	    // return (<div key={i} className={className}></div>)
+	    //for the small board 50*30
+
+	  }, {
+	    key: 'youngCells',
+	    value: function youngCells() {
+	      return this.props.boardState.map(function (elem, index) {
+	        var dx = index % 50 * 12 + "px";
+	        var dy = parseInt(index / 50) * 12 + "px";
+	        var style = { top: dy, left: dx };
+	        if (elem == 1) {
+	          return _react2.default.createElement(_Square2.default, { key: "orange" + index, className: "square orangeCell", style: style });
+	        }
+	        if (elem == 2) {
+	          return _react2.default.createElement(_Square2.default, { key: "red" + index, className: "square redCell", style: style });
+	        }
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        this.youngCells()
+	      );
+	    }
+	  }]);
+
+	  return LivingCellsList;
+	}(_react2.default.Component);
+
+	module.exports = (0, _reactRedux.connect)()(LivingCellsList);
 
 /***/ }
 /******/ ]);

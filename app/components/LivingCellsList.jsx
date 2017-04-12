@@ -1,0 +1,46 @@
+import React  from 'react' ;
+import Square from './Square.jsx';
+import { connect } from 'react-redux';
+
+
+
+class LivingCellsList extends React.Component{
+  constructor(props){
+  super(props);
+    
+  this.youngCells = this.youngCells.bind(this);  
+  }
+ 
+  componentWillMount() {
+		console.log('Component is mounting...');
+	}
+  
+ // return (<div key={i} className={className}></div>)
+  //for the small board 50*30
+  youngCells(){
+    return this.props.boardState.map( function(elem,index){
+      var dx = (index%50)*12 + "px";
+      var dy = parseInt(index/50)*12 + "px";
+      var style  = {top:dy, left:dx};
+      if (elem==1){
+        return (<Square key={"orange"+index} className={"square orangeCell"} style = {style}/>)
+      }      
+      if (elem==2){
+        return (<Square key={"red"+index} className={"square redCell"} style = {style}/>)
+      }
+      
+      
+    })
+  }
+      
+  render(){
+    return(
+      <div>
+        {this.youngCells()}
+      </div>
+    )
+  }
+  
+}
+
+module.exports = connect()(LivingCellsList);

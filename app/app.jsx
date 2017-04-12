@@ -23,28 +23,28 @@ ReactDOM.render(
 //const unsubscribe = store.subscribe( ()=>{
 //        let state = store.getState();
 //        console.log("state", state);
-//        RecipeAPI.setRecipes(state.recipes); 
+//        
 //    }
 //);
 
 
-//var initialRecipes = RecipeAPI.getRecipes();
-//console.log("initialRecipes", initialRecipes)
-//store.dispatch(actions.addRecipesAG(initialRecipes));
-////check if this is the first rendering of the page
-//var initialized = localStorage.getItem('initialized');
-//if ( initialized !== 'initialized' ){
-//  store.dispatch(actions.expandPanelAG(1));
-//  store.dispatch(actions.addRecAG('makaronia', ['makaronia', 'saltsa ntomata']));
-//  store.dispatch(actions.addRecAG('spanakoryzo', ['spanaki', 'ryzi']));
-//  localStorage.setItem('initialized','initialized');
-//}
-
-// Create Actions
-
 //Dispatch the actions
 //
+
+var newArray = [...Array(1500)].map( ()=>{
+  return Math.random() > 0.5 ? 1 : 0 ; 
+} );
+
 store.dispatch(actions.showSmallBoardAG());
-store.dispatch(actions.showMediumBoardAG());
-store.dispatch(actions.showBigBoardAG());
-//store.dispatch(actions.contractPanelAG(1));n
+
+store.dispatch(actions.nextGenAG(newArray,50));
+store.dispatch(actions.nextGenAG(undefined,50));
+
+var counter = 0
+setInterval( function(){
+  counter++;
+  console.log(counter);
+  store.dispatch(actions.nextGenAG(undefined,50));}, 20 )
+
+
+

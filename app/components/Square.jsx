@@ -1,4 +1,4 @@
-import React            from 'react' ;
+import React from 'react' ;
 
 class Square extends React.Component{
   constructor(props){
@@ -7,9 +7,9 @@ class Square extends React.Component{
   
   render(){
   return (
-      <div className="square"></div>
+      <div key={this.props.key} className={this.props.className} style = {this.props.style}></div>
   );
-    //}
+    
   }
 }
 
