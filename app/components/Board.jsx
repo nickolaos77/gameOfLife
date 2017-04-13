@@ -1,6 +1,7 @@
-import React             from 'react' ;
-import { connect }       from 'react-redux';
-import LivingCellsList from './LivingCellsList.jsx';
+import React            from 'react' ;
+import { connect }      from 'react-redux';
+import BoardCellList    from './BoardCellList.jsx'; 
+import LivingCellsList  from './LivingCellsList.jsx';
 import Square from './Square.jsx';
 const actions = require('../actions/actions.jsx');
 
@@ -21,42 +22,60 @@ class Board extends React.Component{
   
   
   
-  render(){   
-   if(this.props.boardSize === "SMALL_BOARD_SHOWING"){   
-      return (
-        <div id="boardSmall" >{ this.squareCreator(1500, "square")}
-          <LivingCellsList boardState={this.props.boardState}/>     
-        </div>
-      );
-   }
-   if(this.props.boardSize === "MEDIUM_BOARD_SHOWING"){   
-      return (
-        <div id="boardMedium" >
-         { this.squareCreator(3500,"square")}
-               
-
-        </div>
-      );
-   }
-   if(this.props.boardSize === "BIG_BOARD_SHOWING"){   
-      return (
-        <div id="boardBig" >
-          { this.squareCreator(8000, "squareSmall")}
-         
-        </div>
-      );
-   }    
-    
+  render()
+  {
+  return(
+    <div id="boardAndLivingCellsContainer">
+      <BoardCellList/>
+      <LivingCellsList/>
+    </div>
+  );
   }
+  
+  
+  
+  
+//  {   
+//   if(this.props.boardSize === "SMALL_BOARD_SHOWING"){   
+//      return (
+//        <div id="boardSmall" >{ this.squareCreator(1500, "square")}
+//          <LivingCellsList boardState={this.props.boardState}/>     
+//        </div>
+//      );
+//   }
+//   if(this.props.boardSize === "MEDIUM_BOARD_SHOWING"){   
+//      return (
+//        <div id="boardMedium" >
+//         { this.squareCreator(3500,"square")}
+//               
+//
+//        </div>
+//      );
+//   }
+//   if(this.props.boardSize === "BIG_BOARD_SHOWING"){   
+//      return (
+//        <div id="boardBig" >
+//          { this.squareCreator(8000, "squareSmall")}
+//         
+//        </div>
+//      );
+//   }    
+//    
+//  }
+
+
+
 }
 
-module.exports = connect(
-  (state)=>{
-    return{
-      boardSize  :state.boardSize,
-      boardState :state.boardState
-      //now boardSize and boardState are available as this.props.boardSize and this.props.boardState
-      
-    };
-  }
-)(Board);
+export default Board;
+
+//module.exports = connect(
+//  (state)=>{
+//    return{
+//      boardSize  :state.boardSize,
+//      boardState :state.boardState
+//      //now boardSize and boardState are available as this.props.boardSize and this.props.boardState
+//      
+//    };
+//  }
+//)(Board);

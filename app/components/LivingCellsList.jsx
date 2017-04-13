@@ -19,8 +19,8 @@ class LivingCellsList extends React.Component{
   //for the small board 50*30
   youngCells(){
     return this.props.boardState.map( function(elem,index){
-      var dx = (index%50)*12 + "px";
-      var dy = parseInt(index/50)*12 + "px";
+      var dx = (index%50)*12 + 6.667 + "px";
+      var dy = parseInt(index/50)*12 + 6.667+ "px";
       var style  = {top:dy, left:dx};
       if (elem==1){
         return (<Square key={"orange"+index} className={"square orangeCell"} style = {style}/>)
@@ -35,7 +35,7 @@ class LivingCellsList extends React.Component{
       
   render(){
     return(
-      <div>
+      <div id="livingCellsContainer">
         {this.youngCells()}
       </div>
     )
@@ -43,4 +43,13 @@ class LivingCellsList extends React.Component{
   
 }
 
-module.exports = connect()(LivingCellsList);
+module.exports = connect(
+  (state)=>{
+    return{
+      
+      boardState :state.boardState
+      //now boardSize and boardState are available as this.props.boardSize and this.props.boardState
+      
+    };
+  }
+)(LivingCellsList);

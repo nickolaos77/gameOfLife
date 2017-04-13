@@ -1,4 +1,4 @@
-import newStateCreator from './helperFunctions/gameLogic.js'
+import improvedStateCreator from './helperFunctions/gameLogic.js'
 
 //C.R.U.D. Recuder
 //----------------
@@ -44,23 +44,34 @@ export const crudRecReducer = (state = [], action)=>{
     };   
 };
 
-//Panel Recuder 
+//Activity state reducer 
+//--------------
+export const activityReducer = (state = 'active', action)=>{
+  switch (action.type){
+    case 'RUN': 
+      return 'RUNNING';
+    case 'PAUSE':
+      return 'PAUSED';
+  }
+}
+
+
+//Next state reducer 
 //--------------
 
 export const newGenerationReducer = (state=[], action) => {
   switch (action.type){
-      case 'CREATE_THE_NEXT_GEN':
-         
+      case 'CREATE_THE_NEXT_GEN':        
           if (action.boardState){  
-            return newStateCreator(action.boardState,action.numOfCols)}
-          else {return newStateCreator(state,action.numOfCols)}  
+            return improvedStateCreator(action.boardState,action.numOfCols)}
+          else {return improvedStateCreator(state,action.numOfCols)}  
           
       default:
           return state;   
 }
 };
 
-//Modal Recuder 
+//Board size reducer
 //-------------//
 
 export const boardSizeReducer = (state='MEDIUM_BOARD_SHOWING',action)=>{

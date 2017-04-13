@@ -43,8 +43,8 @@ store.dispatch(actions.nextGenAG(undefined,50));
 var counter = 0
 setInterval( function(){
   counter++;
-  console.log(counter);
-  store.dispatch(actions.nextGenAG(undefined,50));}, 20 )
+  
+  store.dispatch(actions.nextGenAG(undefined,50));}, 10 )
 
 
 

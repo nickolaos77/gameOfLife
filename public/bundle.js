@@ -69,8 +69,8 @@
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 	var redux = __webpack_require__(159);
-	var actions = __webpack_require__(212);
-	var store = __webpack_require__(213).configure();
+	var actions = __webpack_require__(211);
+	var store = __webpack_require__(215).configure();
 	//const RecipeAPI    =   require('./api/RecipeAPI.jsx')
 	//
 
@@ -106,9 +106,9 @@
 	var counter = 0;
 	setInterval(function () {
 	  counter++;
-	  console.log(counter);
+
 	  store.dispatch(actions.nextGenAG(undefined, 50));
-	}, 20);
+	}, 10);
 
 /***/ },
 /* 1 */
@@ -22368,11 +22368,11 @@
 
 	var _Board2 = _interopRequireDefault(_Board);
 
-	var _TopButtons = __webpack_require__(210);
+	var _TopButtons = __webpack_require__(213);
 
 	var _TopButtons2 = _interopRequireDefault(_TopButtons);
 
-	var _BottomButtons = __webpack_require__(211);
+	var _BottomButtons = __webpack_require__(214);
 
 	var _BottomButtons2 = _interopRequireDefault(_BottomButtons);
 
@@ -22428,6 +22428,10 @@
 
 	'use strict';
 
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(1);
@@ -22436,11 +22440,15 @@
 
 	var _reactRedux = __webpack_require__(180);
 
-	var _LivingCellsList = __webpack_require__(216);
+	var _BoardCellList = __webpack_require__(209);
+
+	var _BoardCellList2 = _interopRequireDefault(_BoardCellList);
+
+	var _LivingCellsList = __webpack_require__(212);
 
 	var _LivingCellsList2 = _interopRequireDefault(_LivingCellsList);
 
-	var _Square = __webpack_require__(209);
+	var _Square = __webpack_require__(210);
 
 	var _Square2 = _interopRequireDefault(_Square);
 
@@ -22454,7 +22462,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var actions = __webpack_require__(212);
+	var actions = __webpack_require__(211);
 
 	var Board = function (_React$Component) {
 	  _inherits(Board, _React$Component);
@@ -22480,45 +22488,139 @@
 	  _createClass(Board, [{
 	    key: 'render',
 	    value: function render() {
-	      if (this.props.boardSize === "SMALL_BOARD_SHOWING") {
-	        return _react2.default.createElement(
-	          'div',
-	          { id: 'boardSmall' },
-	          this.squareCreator(1500, "square"),
-	          _react2.default.createElement(_LivingCellsList2.default, { boardState: this.props.boardState })
-	        );
-	      }
-	      if (this.props.boardSize === "MEDIUM_BOARD_SHOWING") {
-	        return _react2.default.createElement(
-	          'div',
-	          { id: 'boardMedium' },
-	          this.squareCreator(3500, "square")
-	        );
-	      }
-	      if (this.props.boardSize === "BIG_BOARD_SHOWING") {
-	        return _react2.default.createElement(
-	          'div',
-	          { id: 'boardBig' },
-	          this.squareCreator(8000, "squareSmall")
-	        );
-	      }
+	      return _react2.default.createElement(
+	        'div',
+	        { id: 'boardAndLivingCellsContainer' },
+	        _react2.default.createElement(_BoardCellList2.default, null),
+	        _react2.default.createElement(_LivingCellsList2.default, null)
+	      );
 	    }
+
+	    //  {   
+	    //   if(this.props.boardSize === "SMALL_BOARD_SHOWING"){   
+	    //      return (
+	    //        <div id="boardSmall" >{ this.squareCreator(1500, "square")}
+	    //          <LivingCellsList boardState={this.props.boardState}/>     
+	    //        </div>
+	    //      );
+	    //   }
+	    //   if(this.props.boardSize === "MEDIUM_BOARD_SHOWING"){   
+	    //      return (
+	    //        <div id="boardMedium" >
+	    //         { this.squareCreator(3500,"square")}
+	    //               
+	    //
+	    //        </div>
+	    //      );
+	    //   }
+	    //   if(this.props.boardSize === "BIG_BOARD_SHOWING"){   
+	    //      return (
+	    //        <div id="boardBig" >
+	    //          { this.squareCreator(8000, "squareSmall")}
+	    //         
+	    //        </div>
+	    //      );
+	    //   }    
+	    //    
+	    //  }
+
+
 	  }]);
 
 	  return Board;
 	}(_react2.default.Component);
 
-	module.exports = (0, _reactRedux.connect)(function (state) {
-	  return {
-	    boardSize: state.boardSize,
-	    boardState: state.boardState
-	    //now boardSize and boardState are available as this.props.boardSize and this.props.boardState
+	exports.default = Board;
 
-	  };
-	})(Board);
+	//module.exports = connect(
+	//  (state)=>{
+	//    return{
+	//      boardSize  :state.boardSize,
+	//      boardState :state.boardState
+	//      //now boardSize and boardState are available as this.props.boardSize and this.props.boardState
+	//      
+	//    };
+	//  }
+	//)(Board);
 
 /***/ },
 /* 209 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(180);
+
+	var _Square = __webpack_require__(210);
+
+	var _Square2 = _interopRequireDefault(_Square);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	//import BoardCellList    from './BoardCellList.jsx'; 
+
+
+	var actions = __webpack_require__(211);
+
+	var BoardCellList = function (_React$Component) {
+	  _inherits(BoardCellList, _React$Component);
+
+	  function BoardCellList(props) {
+	    _classCallCheck(this, BoardCellList);
+
+	    var _this = _possibleConstructorReturn(this, (BoardCellList.__proto__ || Object.getPrototypeOf(BoardCellList)).call(this, props));
+
+	    _this.squareCreator = function (numOfSquares, className) {
+	      return [].concat(_toConsumableArray(Array(numOfSquares))).map(function (x, i) {
+	        if (i == 1000) {
+	          console.log("I just updated");
+	        }
+	        return _react2.default.createElement(_Square2.default, { key: i, className: className });
+	      });
+	    };
+
+	    _this.squareCreator = _this.squareCreator.bind(_this);
+
+	    return _this;
+	  }
+	  //change to es5 function to make it testable
+
+
+	  _createClass(BoardCellList, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { id: 'boardSmall' },
+	        this.squareCreator(1500, "square")
+	      );
+	    }
+	  }]);
+
+	  return BoardCellList;
+	}(_react2.default.Component);
+
+	exports.default = BoardCellList;
+
+/***/ },
+/* 210 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22563,7 +22665,178 @@
 	exports.default = Square;
 
 /***/ },
-/* 210 */
+/* 211 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	//C.R.U.D. action generators
+	//---------------------------------------
+
+	var addRecAG = exports.addRecAG = function addRecAG(recipeName, ingredients) {
+	    return {
+	        type: 'ADD_RECIPE',
+	        recipeName: recipeName,
+	        ingredients: ingredients
+	    };
+	};
+
+	var addRecipesAG = exports.addRecipesAG = function addRecipesAG(recipes) {
+	    console.log("Action generator", recipes);
+	    return {
+	        type: 'ADD_RECIPES',
+	        recipes: recipes
+	    };
+	};
+
+	var delRecAG = exports.delRecAG = function delRecAG(recipeIndex) {
+	    return {
+	        type: 'DEL_RECIPE',
+	        recipeIndex: recipeIndex
+	    };
+	};
+
+	var editRecAG = exports.editRecAG = function editRecAG(recipeName, ingredients, recipeIndex) {
+	    return {
+	        type: 'EDIT_RECIPE',
+	        recipeName: recipeName,
+	        ingredients: ingredients,
+	        recipeIndex: recipeIndex
+	    };
+	};
+
+	//Run/Pause action generators
+	//---------------------------------------
+	var runAG = exports.runAG = function runAG() {
+	    return { type: "RUN" };
+	};
+
+	var pauseAG = exports.pauseAG = function pauseAG() {
+	    return { type: "PAUSE" };
+	};
+
+	//Next generation action generators
+	//---------------------------------------
+
+	var nextGenAG = exports.nextGenAG = function nextGenAG(boardState, numOfCols) {
+	    return {
+	        type: 'CREATE_THE_NEXT_GEN',
+	        boardState: boardState,
+	        numOfCols: numOfCols
+	    };
+	};
+
+	//Board selection action generators
+	//---------------------------------------
+
+	var showSmallBoardAG = exports.showSmallBoardAG = function showSmallBoardAG() {
+	    return {
+	        type: 'SHOW_SMALL_BOARD'
+	    };
+	};
+
+	var showMediumBoardAG = exports.showMediumBoardAG = function showMediumBoardAG() {
+	    return {
+	        type: 'SHOW_MEDIUM_BOARD'
+	    };
+	};
+
+	var showBigBoardAG = exports.showBigBoardAG = function showBigBoardAG() {
+	    return {
+	        type: 'SHOW_BIG_BOARD'
+	    };
+	};
+
+/***/ },
+/* 212 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Square = __webpack_require__(210);
+
+	var _Square2 = _interopRequireDefault(_Square);
+
+	var _reactRedux = __webpack_require__(180);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var LivingCellsList = function (_React$Component) {
+	  _inherits(LivingCellsList, _React$Component);
+
+	  function LivingCellsList(props) {
+	    _classCallCheck(this, LivingCellsList);
+
+	    var _this = _possibleConstructorReturn(this, (LivingCellsList.__proto__ || Object.getPrototypeOf(LivingCellsList)).call(this, props));
+
+	    _this.youngCells = _this.youngCells.bind(_this);
+	    return _this;
+	  }
+
+	  _createClass(LivingCellsList, [{
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      console.log('Component is mounting...');
+	    }
+
+	    // return (<div key={i} className={className}></div>)
+	    //for the small board 50*30
+
+	  }, {
+	    key: 'youngCells',
+	    value: function youngCells() {
+	      return this.props.boardState.map(function (elem, index) {
+	        var dx = index % 50 * 12 + 6.667 + "px";
+	        var dy = parseInt(index / 50) * 12 + 6.667 + "px";
+	        var style = { top: dy, left: dx };
+	        if (elem == 1) {
+	          return _react2.default.createElement(_Square2.default, { key: "orange" + index, className: "square orangeCell", style: style });
+	        }
+	        if (elem == 2) {
+	          return _react2.default.createElement(_Square2.default, { key: "red" + index, className: "square redCell", style: style });
+	        }
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { id: 'livingCellsContainer' },
+	        this.youngCells()
+	      );
+	    }
+	  }]);
+
+	  return LivingCellsList;
+	}(_react2.default.Component);
+
+	module.exports = (0, _reactRedux.connect)(function (state) {
+	  return {
+
+	    boardState: state.boardState
+	    //now boardSize and boardState are available as this.props.boardSize and this.props.boardState
+
+	  };
+	})(LivingCellsList);
+
+/***/ },
+/* 213 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22635,7 +22908,7 @@
 	exports.default = TopButtons;
 
 /***/ },
-/* 211 */
+/* 214 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22656,7 +22929,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var actions = __webpack_require__(212);
+	var actions = __webpack_require__(211);
 
 	var BottomButtons = function (_React$Component) {
 	  _inherits(BottomButtons, _React$Component);
@@ -22743,83 +23016,7 @@
 	module.exports = (0, _reactRedux.connect)()(BottomButtons);
 
 /***/ },
-/* 212 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	//C.R.U.D. action generators
-	//---------------------------------------
-
-	var addRecAG = exports.addRecAG = function addRecAG(recipeName, ingredients) {
-	    return {
-	        type: 'ADD_RECIPE',
-	        recipeName: recipeName,
-	        ingredients: ingredients
-	    };
-	};
-
-	var addRecipesAG = exports.addRecipesAG = function addRecipesAG(recipes) {
-	    console.log("Action generator", recipes);
-	    return {
-	        type: 'ADD_RECIPES',
-	        recipes: recipes
-	    };
-	};
-
-	var delRecAG = exports.delRecAG = function delRecAG(recipeIndex) {
-	    return {
-	        type: 'DEL_RECIPE',
-	        recipeIndex: recipeIndex
-	    };
-	};
-
-	var editRecAG = exports.editRecAG = function editRecAG(recipeName, ingredients, recipeIndex) {
-	    return {
-	        type: 'EDIT_RECIPE',
-	        recipeName: recipeName,
-	        ingredients: ingredients,
-	        recipeIndex: recipeIndex
-	    };
-	};
-
-	//Next generation action generator
-	//---------------------------------------
-
-	var nextGenAG = exports.nextGenAG = function nextGenAG(boardState, numOfCols) {
-	    return {
-	        type: 'CREATE_THE_NEXT_GEN',
-	        boardState: boardState,
-	        numOfCols: numOfCols
-	    };
-	};
-
-	//Board selection action generators
-	//---------------------------------------
-
-	var showSmallBoardAG = exports.showSmallBoardAG = function showSmallBoardAG() {
-	    return {
-	        type: 'SHOW_SMALL_BOARD'
-	    };
-	};
-
-	var showMediumBoardAG = exports.showMediumBoardAG = function showMediumBoardAG() {
-	    return {
-	        type: 'SHOW_MEDIUM_BOARD'
-	    };
-	};
-
-	var showBigBoardAG = exports.showBigBoardAG = function showBigBoardAG() {
-	    return {
-	        type: 'SHOW_BIG_BOARD'
-	    };
-	};
-
-/***/ },
-/* 213 */
+/* 215 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22829,13 +23026,14 @@
 	});
 	exports.configure = undefined;
 
-	var _reducers = __webpack_require__(214);
+	var _reducers = __webpack_require__(216);
 
 	var redux = __webpack_require__(159);
 	var configure = exports.configure = function configure() {
 	    var reducer = redux.combineReducers({
 	        boardSize: _reducers.boardSizeReducer,
-	        boardState: _reducers.newGenerationReducer
+	        boardState: _reducers.newGenerationReducer,
+	        activity: activityReducer
 	        //recipes   :  crudRecReducer,
 	    });
 
@@ -22847,7 +23045,7 @@
 	};
 
 /***/ },
-/* 214 */
+/* 216 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22855,9 +23053,9 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.boardSizeReducer = exports.newGenerationReducer = exports.crudRecReducer = undefined;
+	exports.boardSizeReducer = exports.newGenerationReducer = exports.activityReducer = exports.crudRecReducer = undefined;
 
-	var _gameLogic = __webpack_require__(215);
+	var _gameLogic = __webpack_require__(217);
 
 	var _gameLogic2 = _interopRequireDefault(_gameLogic);
 
@@ -22915,7 +23113,21 @@
 	    };
 	};
 
-	//Panel Recuder 
+	//Activity state reducer 
+	//--------------
+	var activityReducer = exports.activityReducer = function activityReducer() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'active';
+	    var action = arguments[1];
+
+	    switch (action.type) {
+	        case 'RUN':
+	            return 'RUNNING';
+	        case 'PAUSE':
+	            return 'PAUSED';
+	    }
+	};
+
+	//Next state reducer 
 	//--------------
 
 	var newGenerationReducer = exports.newGenerationReducer = function newGenerationReducer() {
@@ -22924,7 +23136,6 @@
 
 	    switch (action.type) {
 	        case 'CREATE_THE_NEXT_GEN':
-
 	            if (action.boardState) {
 	                return (0, _gameLogic2.default)(action.boardState, action.numOfCols);
 	            } else {
@@ -22936,7 +23147,7 @@
 	    }
 	};
 
-	//Modal Recuder 
+	//Board size reducer
 	//-------------//
 
 	var boardSizeReducer = exports.boardSizeReducer = function boardSizeReducer() {
@@ -22959,7 +23170,7 @@
 	};
 
 /***/ },
-/* 215 */
+/* 217 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -22979,24 +23190,9 @@
 	//} );
 
 
-	//cellValueMapper::Number->Number
-	function cellValueMapper(el) {
-	  if (typeof el != "number") {
-	    return 0;
-	  }
-	  if (el == 0) {
-	    return 0;
-	  }
-	  if (el == 1) {
-	    return 1;
-	  } else {
-	    return 1;
-	  }
-	}
-
 	//countcountTheNeighborsOfEachCell::Array ,Number   ,Function->Array
 	function countTheNeighborsOfEachCell(oldState, numOfCols) {
-
+	  //cellValueMapper::Number->Number
 	  var cVM = function cellValueMapper(el) {
 	    if (typeof el != "number") {
 	      return 0;
@@ -23054,87 +23250,13 @@
 	//  var oldState = newStateCreator(countTheNeighborsOfEachCell(oldState,6))
 	//}
 
+	//const composeTwoArgs = (a,b) => (c,d)=> a(b(c,d))
+	//const improvedStateCreator = composeTwoArgs(newStateCreator,countTheNeighborsOfEachCell); 
+	//export default improvedStateCreator;
+
 	function improvedStateCreator(oldState, numOfCols) {
 	  return newStateCreator(countTheNeighborsOfEachCell(oldState, numOfCols));
 	}
-
-/***/ },
-/* 216 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _Square = __webpack_require__(209);
-
-	var _Square2 = _interopRequireDefault(_Square);
-
-	var _reactRedux = __webpack_require__(180);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var LivingCellsList = function (_React$Component) {
-	  _inherits(LivingCellsList, _React$Component);
-
-	  function LivingCellsList(props) {
-	    _classCallCheck(this, LivingCellsList);
-
-	    var _this = _possibleConstructorReturn(this, (LivingCellsList.__proto__ || Object.getPrototypeOf(LivingCellsList)).call(this, props));
-
-	    _this.youngCells = _this.youngCells.bind(_this);
-	    return _this;
-	  }
-
-	  _createClass(LivingCellsList, [{
-	    key: 'componentWillMount',
-	    value: function componentWillMount() {
-	      console.log('Component is mounting...');
-	    }
-
-	    // return (<div key={i} className={className}></div>)
-	    //for the small board 50*30
-
-	  }, {
-	    key: 'youngCells',
-	    value: function youngCells() {
-	      return this.props.boardState.map(function (elem, index) {
-	        var dx = index % 50 * 12 + "px";
-	        var dy = parseInt(index / 50) * 12 + "px";
-	        var style = { top: dy, left: dx };
-	        if (elem == 1) {
-	          return _react2.default.createElement(_Square2.default, { key: "orange" + index, className: "square orangeCell", style: style });
-	        }
-	        if (elem == 2) {
-	          return _react2.default.createElement(_Square2.default, { key: "red" + index, className: "square redCell", style: style });
-	        }
-	      });
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        this.youngCells()
-	      );
-	    }
-	  }]);
-
-	  return LivingCellsList;
-	}(_react2.default.Component);
-
-	module.exports = (0, _reactRedux.connect)()(LivingCellsList);
 
 /***/ }
 /******/ ]);

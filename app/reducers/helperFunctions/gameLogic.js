@@ -57,13 +57,17 @@ function newStateCreator (argArray){
   if (el==0 && numberOfNeighborsArray[index] ==3 ){return 1}
   if (el==0 && numberOfNeighborsArray[index] !=3 ){return 0}
 }  )
-  return newState;
+  return newState;  
 }
 
 //for (var i=0; i<5; i++){
 //  console.log(oldState)
 //  var oldState = newStateCreator(countTheNeighborsOfEachCell(oldState,6))
 //}
+
+//const composeTwoArgs = (a,b) => (c,d)=> a(b(c,d))
+//const improvedStateCreator = composeTwoArgs(newStateCreator,countTheNeighborsOfEachCell); 
+//export default improvedStateCreator;
 
 export default function improvedStateCreator ( oldState, numOfCols ){
   return newStateCreator(countTheNeighborsOfEachCell(oldState,numOfCols))

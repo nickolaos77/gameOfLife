@@ -4,7 +4,8 @@ import {boardSizeReducer, newGenerationReducer} from './../reducers/reducers';
 export const configure =()=>{
 const reducer = redux.combineReducers({
     boardSize :  boardSizeReducer,
-    boardState:  newGenerationReducer
+    boardState:  newGenerationReducer,
+    activity  :  activityReducer
     //recipes   :  crudRecReducer,
 });
  

@@ -35,7 +35,18 @@ export const editRecAG = (recipeName, ingredients, recipeIndex) =>{
 }
 
 
-//Next generation action generator
+//Run/Pause action generators
+//---------------------------------------
+export const runAG = () =>{
+  return {type:"RUN"}
+}
+
+export const pauseAG = () =>{
+  return {type:"PAUSE"}
+}
+
+
+//Next generation action generators
 //---------------------------------------
 
 export const nextGenAG = (boardState,numOfCols) => {
