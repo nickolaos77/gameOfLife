@@ -99,16 +99,13 @@
 	});
 
 	store.dispatch(actions.showSmallBoardAG());
-
 	store.dispatch(actions.nextGenAG(newArray, 50));
-	store.dispatch(actions.nextGenAG(undefined, 50));
+	//store.dispatch(actions.nextGenAG(undefined,50));
 
-	var counter = 0;
-	setInterval(function () {
-	  counter++;
-
-	  store.dispatch(actions.nextGenAG(undefined, 50));
-	}, 10);
+	//var counter = 0
+	//setInterval( function(){
+	//  counter++;
+	//  store.dispatch(actions.nextGenAG(undefined,50));}, 10 )
 
 /***/ },
 /* 1 */
@@ -22495,53 +22492,12 @@
 	        _react2.default.createElement(_LivingCellsList2.default, null)
 	      );
 	    }
-
-	    //  {   
-	    //   if(this.props.boardSize === "SMALL_BOARD_SHOWING"){   
-	    //      return (
-	    //        <div id="boardSmall" >{ this.squareCreator(1500, "square")}
-	    //          <LivingCellsList boardState={this.props.boardState}/>     
-	    //        </div>
-	    //      );
-	    //   }
-	    //   if(this.props.boardSize === "MEDIUM_BOARD_SHOWING"){   
-	    //      return (
-	    //        <div id="boardMedium" >
-	    //         { this.squareCreator(3500,"square")}
-	    //               
-	    //
-	    //        </div>
-	    //      );
-	    //   }
-	    //   if(this.props.boardSize === "BIG_BOARD_SHOWING"){   
-	    //      return (
-	    //        <div id="boardBig" >
-	    //          { this.squareCreator(8000, "squareSmall")}
-	    //         
-	    //        </div>
-	    //      );
-	    //   }    
-	    //    
-	    //  }
-
-
 	  }]);
 
 	  return Board;
 	}(_react2.default.Component);
 
 	exports.default = Board;
-
-	//module.exports = connect(
-	//  (state)=>{
-	//    return{
-	//      boardSize  :state.boardSize,
-	//      boardState :state.boardState
-	//      //now boardSize and boardState are available as this.props.boardSize and this.props.boardState
-	//      
-	//    };
-	//  }
-	//)(Board);
 
 /***/ },
 /* 209 */
@@ -22592,7 +22548,7 @@
 	        if (i == 1000) {
 	          console.log("I just updated");
 	        }
-	        return _react2.default.createElement(_Square2.default, { key: i, className: className });
+	        return _react2.default.createElement(_Square2.default, { key: i, id: i, className: className });
 	      });
 	    };
 
@@ -22625,15 +22581,13 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(180);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -22643,79 +22597,76 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	var actions = __webpack_require__(211);
+
 	var Square = function (_React$Component) {
 	  _inherits(Square, _React$Component);
 
 	  function Square(props) {
 	    _classCallCheck(this, Square);
 
-	    return _possibleConstructorReturn(this, (Square.__proto__ || Object.getPrototypeOf(Square)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (Square.__proto__ || Object.getPrototypeOf(Square)).call(this, props));
+
+	    _this.livingCellAdder = _this.livingCellAdder.bind(_this);
+	    return _this;
 	  }
 
 	  _createClass(Square, [{
+	    key: 'livingCellAdder',
+	    value: function livingCellAdder(cellIndex) {
+	      this.props.dispatch(actions.insertLivingCellAG(cellIndex));
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
-	      return _react2.default.createElement('div', { key: this.props.key, className: this.props.className, style: this.props.style });
+	      var _this2 = this;
+
+	      return _react2.default.createElement('div', { key: this.props.key, id: this.props.id, className: this.props.className, style: this.props.style, onClick: function onClick() {
+	          _this2.livingCellAdder(_this2.props.id);
+	        } });
 	    }
 	  }]);
 
 	  return Square;
 	}(_react2.default.Component);
+	//this is how I make available in my component the this.props.dispatch without having to listen to the state changes
 
-	exports.default = Square;
+
+	module.exports = (0, _reactRedux.connect)()(Square);
 
 /***/ },
 /* 211 */
 /***/ function(module, exports) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	//C.R.U.D. action generators
-	//---------------------------------------
-
-	var addRecAG = exports.addRecAG = function addRecAG(recipeName, ingredients) {
+	//Generation counter action generators
+	//--------------------------------------
+	var incrementAG = exports.incrementAG = function incrementAG() {
 	    return {
-	        type: 'ADD_RECIPE',
-	        recipeName: recipeName,
-	        ingredients: ingredients
+	        type: "INCREMENT"
 	    };
 	};
-
-	var addRecipesAG = exports.addRecipesAG = function addRecipesAG(recipes) {
-	    console.log("Action generator", recipes);
+	var initializeAG = exports.initializeAG = function initializeAG() {
 	    return {
-	        type: 'ADD_RECIPES',
-	        recipes: recipes
+	        type: "INITIALIZE"
 	    };
 	};
-
-	var delRecAG = exports.delRecAG = function delRecAG(recipeIndex) {
-	    return {
-	        type: 'DEL_RECIPE',
-	        recipeIndex: recipeIndex
-	    };
-	};
-
-	var editRecAG = exports.editRecAG = function editRecAG(recipeName, ingredients, recipeIndex) {
-	    return {
-	        type: 'EDIT_RECIPE',
-	        recipeName: recipeName,
-	        ingredients: ingredients,
-	        recipeIndex: recipeIndex
-	    };
-	};
-
 	//Run/Pause action generators
 	//---------------------------------------
-	var runAG = exports.runAG = function runAG() {
-	    return { type: "RUN" };
+	var runAG = exports.runAG = function runAG(currentInterval, timeStep) {
+	    return { type: "RUN",
+	        currentInterval: currentInterval,
+	        timeStep: timeStep
+	    };
 	};
 
-	var pauseAG = exports.pauseAG = function pauseAG() {
-	    return { type: "PAUSE" };
+	var pauseAG = exports.pauseAG = function pauseAG(timeStep) {
+	    return { type: "PAUSE",
+	        timeStep: timeStep };
 	};
 
 	//Next generation action generators
@@ -22726,6 +22677,20 @@
 	        type: 'CREATE_THE_NEXT_GEN',
 	        boardState: boardState,
 	        numOfCols: numOfCols
+	    };
+	};
+
+	var insertLivingCellAG = exports.insertLivingCellAG = function insertLivingCellAG(cellIndex) {
+	    return {
+	        type: 'INSERT_LIVING_CELL',
+	        cellIndex: cellIndex
+	    };
+	};
+
+	var boardClearerAG = exports.boardClearerAG = function boardClearerAG() {
+	    return {
+	        type: 'CLEAR_THE_BOARD'
+
 	    };
 	};
 
@@ -22828,7 +22793,6 @@
 
 	module.exports = (0, _reactRedux.connect)(function (state) {
 	  return {
-
 	    boardState: state.boardState
 	    //now boardSize and boardState are available as this.props.boardSize and this.props.boardState
 
@@ -22840,10 +22804,6 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -22861,7 +22821,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	//const actions = require('../actions/actions.jsx');
+	var actions = __webpack_require__(211);
 
 	var TopButtons = function (_React$Component) {
 	  _inherits(TopButtons, _React$Component);
@@ -22869,34 +22829,69 @@
 	  function TopButtons(props) {
 	    _classCallCheck(this, TopButtons);
 
-	    return _possibleConstructorReturn(this, (TopButtons.__proto__ || Object.getPrototypeOf(TopButtons)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (TopButtons.__proto__ || Object.getPrototypeOf(TopButtons)).call(this, props));
+
+	    _this.intervalStarter = _this.intervalStarter.bind(_this);
+	    _this.intervalCleaner = _this.intervalCleaner.bind(_this);
+	    return _this;
 	  }
 
 	  _createClass(TopButtons, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.intervalStarter();
+	    }
+	  }, {
+	    key: 'intervalStarter',
+	    value: function intervalStarter() {
+	      if (this.props.myInterval.intervalRunning == 'No') {
+
+	        var myInterval = this.props.myInterval.intervalCreator(this.props.myInterval.timeStep, this.props.dispatch, actions.nextGenAG);
+	        //this.props.dispatch(actions.incrementAG());  
+	        this.props.dispatch(actions.runAG(myInterval, this.props.myInterval.timeStep));
+	      }
+	    }
+	  }, {
+	    key: 'intervalCleaner',
+	    value: function intervalCleaner(timeStep) {
+	      this.props.dispatch(actions.pauseAG(timeStep));
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this2 = this;
+
 	      return _react2.default.createElement(
 	        'div',
 	        { id: 'topButtons' },
 	        _react2.default.createElement(
 	          'button',
-	          { className: 'buttonTop' },
+	          { className: 'buttonTop', onClick: function onClick() {
+	              _this2.intervalStarter();
+	            } },
 	          'Run'
 	        ),
 	        _react2.default.createElement(
 	          'button',
-	          { className: 'buttonTop' },
+	          { className: 'buttonTop', onClick: function onClick() {
+	              _this2.intervalCleaner(_this2.props.myInterval.timeStep);
+	            } },
 	          'Pause'
 	        ),
 	        _react2.default.createElement(
 	          'button',
-	          { className: 'buttonTop' },
+	          { className: 'buttonTop', onClick: function onClick() {
+	              _this2.intervalCleaner(_this2.props.myInterval.timeStep);
+	              _this2.props.dispatch(actions.initializeAG());
+	              _this2.props.dispatch(actions.boardClearerAG());
+	            } },
 	          'Clear'
 	        ),
 	        _react2.default.createElement(
 	          'span',
 	          { className: 'textColor marginLeft20' },
-	          ' Generation:'
+	          ' Generation:',
+	          this.props.generations
 	        )
 	      );
 	    }
@@ -22905,7 +22900,13 @@
 	  return TopButtons;
 	}(_react2.default.Component);
 
-	exports.default = TopButtons;
+	module.exports = (0, _reactRedux.connect)(function (state) {
+	  return {
+	    myInterval: state.myInterval,
+	    generations: state.generations
+	    //now myInterval is available as this.props.myInterval 
+	  };
+	})(TopButtons);
 
 /***/ },
 /* 214 */
@@ -22942,6 +22943,8 @@
 	    _this.showSmallBoard = _this.showSmallBoard.bind(_this);
 	    _this.showMediumBoard = _this.showMediumBoard.bind(_this);
 	    _this.showBigBoard = _this.showBigBoard.bind(_this);
+	    _this.intervalStarter = _this.intervalStarter.bind(_this);
+	    _this.intervalCleaner = _this.intervalCleaner.bind(_this);
 	    return _this;
 	  }
 
@@ -22961,8 +22964,37 @@
 	      this.props.dispatch(actions.showBigBoardAG());
 	    }
 	  }, {
+	    key: 'intervalStarter',
+	    value: function intervalStarter(timeStep) {
+	      if (this.props.myInterval.intervalRunning == 'No') {
+	        var myInterval = this.props.myInterval.intervalCreator(timeStep, this.props.dispatch, actions.nextGenAG);
+	        this.props.dispatch(actions.runAG(myInterval, timeStep));
+	      }
+	    }
+	  }, {
+	    key: 'intervalCleaner',
+	    value: function intervalCleaner(timeStep) {
+	      this.props.dispatch(actions.pauseAG(timeStep));
+	    }
+	  }, {
+	    key: 'speedChanger',
+	    value: function speedChanger(timeStep) {
+	      var _this2 = this;
+
+	      if (this.props.myInterval.intervalRunning == 'Yes') {
+	        new Promise(function (resolve, reject) {
+	          _this2.intervalCleaner(timeStep);
+	          resolve();
+	        }).then(function () {
+	          _this2.intervalStarter(timeStep);
+	        });
+	      }
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this3 = this;
+
 	      return _react2.default.createElement(
 	        'div',
 	        { id: 'bottomButtons' },
@@ -22993,17 +23025,23 @@
 	        ),
 	        _react2.default.createElement(
 	          'button',
-	          { className: 'buttonBottom ' },
+	          { className: 'buttonBottom', onClick: function onClick() {
+	              _this3.speedChanger(1500);
+	            } },
 	          'Slow'
 	        ),
 	        _react2.default.createElement(
 	          'button',
-	          { className: 'buttonBottom ' },
+	          { className: 'buttonBottom ', onClick: function onClick() {
+	              _this3.speedChanger(500);
+	            } },
 	          'Medium'
 	        ),
 	        _react2.default.createElement(
 	          'button',
-	          { className: 'buttonBottom ' },
+	          { className: 'buttonBottom ', onClick: function onClick() {
+	              _this3.speedChanger(50);
+	            } },
 	          'Fast'
 	        )
 	      );
@@ -23013,7 +23051,11 @@
 	  return BottomButtons;
 	}(_react2.default.Component);
 
-	module.exports = (0, _reactRedux.connect)()(BottomButtons);
+	module.exports = (0, _reactRedux.connect)(function (state) {
+	  return {
+	    myInterval: state.myInterval
+	  };
+	})(BottomButtons);
 
 /***/ },
 /* 215 */
@@ -23033,7 +23075,8 @@
 	    var reducer = redux.combineReducers({
 	        boardSize: _reducers.boardSizeReducer,
 	        boardState: _reducers.newGenerationReducer,
-	        activity: activityReducer
+	        myInterval: _reducers.intervalReducer,
+	        generations: _reducers.gererationsCountingReducer
 	        //recipes   :  crudRecReducer,
 	    });
 
@@ -23053,7 +23096,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.boardSizeReducer = exports.newGenerationReducer = exports.activityReducer = exports.crudRecReducer = undefined;
+	exports.boardSizeReducer = exports.newGenerationReducer = exports.gererationsCountingReducer = exports.intervalReducer = exports.crudRecReducer = undefined;
 
 	var _gameLogic = __webpack_require__(217);
 
@@ -23113,23 +23156,56 @@
 	    };
 	};
 
+	function intervalCreator(timeStep, dispatch, actionGenerator) {
+	    var myInterval = setInterval(function (timeStep) {
+	        dispatch(actionGenerator(undefined, 50));
+	    }, timeStep);
+	    return myInterval;
+	}
+
+	var intervalState = {
+	    intervalRunning: 'No',
+	    currentInterval: "None",
+	    timeStep: 100,
+	    intervalCreator: intervalCreator };
+
 	//Activity state reducer 
 	//--------------
-	var activityReducer = exports.activityReducer = function activityReducer() {
-	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'active';
+	var intervalReducer = exports.intervalReducer = function intervalReducer() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : intervalState;
 	    var action = arguments[1];
 
 	    switch (action.type) {
 	        case 'RUN':
-	            return 'RUNNING';
+	            return { intervalRunning: 'Yes', currentInterval: action.currentInterval, timeStep: action.timeStep, intervalCreator: intervalCreator };
 	        case 'PAUSE':
-	            return 'PAUSED';
+	            var intervalToBeCleared = state.currentInterval;
+	            clearInterval(intervalToBeCleared);
+	            return { intervalRunning: 'No', intervalCreator: intervalCreator, currentInterval: "None", timeStep: action.timeStep };
+	        default:
+	            return state;
+	    }
+	};
+
+	//Generations counter reducer
+	//---------------------------
+
+	var gererationsCountingReducer = exports.gererationsCountingReducer = function gererationsCountingReducer() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+	    var action = arguments[1];
+
+	    switch (action.type) {
+	        case "INCREMENT":
+	            return state + 1;
+	        case "INITIALIZE":
+	            return 0;
+	        default:
+	            return state;
 	    }
 	};
 
 	//Next state reducer 
 	//--------------
-
 	var newGenerationReducer = exports.newGenerationReducer = function newGenerationReducer() {
 	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
 	    var action = arguments[1];
@@ -23141,7 +23217,14 @@
 	            } else {
 	                return (0, _gameLogic2.default)(state, action.numOfCols);
 	            }
-
+	        case 'INSERT_LIVING_CELL':
+	            var newState = [].concat(_toConsumableArray(state));
+	            newState[action.cellIndex] = 1;
+	            return newState;
+	        case 'CLEAR_THE_BOARD':
+	            // I create an array filled with zeros because with nulls it didn't work
+	            var newState = Array.apply(null, new Array(1500)).map(Number.prototype.valueOf, 0);
+	            return newState;
 	        default:
 	            return state;
 	    }
@@ -23179,17 +23262,6 @@
 	  value: true
 	});
 	exports.default = improvedStateCreator;
-
-	// Create randomly an initial array of alive or dead cells. The live ones are light red (young)
-	//Don't forget to test the reducers
-	//make if functional, use haskell notation
-
-	//console.log(newArray);
-	//var newArray = [...Array(36)].map( ()=>{
-	//  return Math.random() > 0.5 ? 1 : 0 ; 
-	//} );
-
-
 	//countcountTheNeighborsOfEachCell::Array ,Number   ,Function->Array
 	function countTheNeighborsOfEachCell(oldState, numOfCols) {
 	  //cellValueMapper::Number->Number
@@ -23244,15 +23316,6 @@
 	  });
 	  return newState;
 	}
-
-	//for (var i=0; i<5; i++){
-	//  console.log(oldState)
-	//  var oldState = newStateCreator(countTheNeighborsOfEachCell(oldState,6))
-	//}
-
-	//const composeTwoArgs = (a,b) => (c,d)=> a(b(c,d))
-	//const improvedStateCreator = composeTwoArgs(newStateCreator,countTheNeighborsOfEachCell); 
-	//export default improvedStateCreator;
 
 	function improvedStateCreator(oldState, numOfCols) {
 	  return newStateCreator(countTheNeighborsOfEachCell(oldState, numOfCols));

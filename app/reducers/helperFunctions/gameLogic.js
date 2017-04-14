@@ -1,14 +1,3 @@
-
-// Create randomly an initial array of alive or dead cells. The live ones are light red (young)
-//Don't forget to test the reducers
-//make if functional, use haskell notation
-
-//console.log(newArray);
-//var newArray = [...Array(36)].map( ()=>{
-//  return Math.random() > 0.5 ? 1 : 0 ; 
-//} );
-
-
 //countcountTheNeighborsOfEachCell::Array ,Number   ,Function->Array
 function countTheNeighborsOfEachCell(oldState,numOfCols){
       //cellValueMapper::Number->Number
@@ -59,15 +48,6 @@ function newStateCreator (argArray){
 }  )
   return newState;  
 }
-
-//for (var i=0; i<5; i++){
-//  console.log(oldState)
-//  var oldState = newStateCreator(countTheNeighborsOfEachCell(oldState,6))
-//}
-
-//const composeTwoArgs = (a,b) => (c,d)=> a(b(c,d))
-//const improvedStateCreator = composeTwoArgs(newStateCreator,countTheNeighborsOfEachCell); 
-//export default improvedStateCreator;
 
 export default function improvedStateCreator ( oldState, numOfCols ){
   return newStateCreator(countTheNeighborsOfEachCell(oldState,numOfCols))

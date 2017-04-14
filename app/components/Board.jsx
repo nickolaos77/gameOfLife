@@ -18,10 +18,6 @@ class Board extends React.Component{
            return (<Square key={i} className={className}/>) 
           })
   }
-  
-  
-  
-  
   render()
   {
   return(
@@ -31,51 +27,6 @@ class Board extends React.Component{
     </div>
   );
   }
-  
-  
-  
-  
-//  {   
-//   if(this.props.boardSize === "SMALL_BOARD_SHOWING"){   
-//      return (
-//        <div id="boardSmall" >{ this.squareCreator(1500, "square")}
-//          <LivingCellsList boardState={this.props.boardState}/>     
-//        </div>
-//      );
-//   }
-//   if(this.props.boardSize === "MEDIUM_BOARD_SHOWING"){   
-//      return (
-//        <div id="boardMedium" >
-//         { this.squareCreator(3500,"square")}
-//               
-//
-//        </div>
-//      );
-//   }
-//   if(this.props.boardSize === "BIG_BOARD_SHOWING"){   
-//      return (
-//        <div id="boardBig" >
-//          { this.squareCreator(8000, "squareSmall")}
-//         
-//        </div>
-//      );
-//   }    
-//    
-//  }
-
-
-
 }
 
 export default Board;
-
-//module.exports = connect(
-//  (state)=>{
-//    return{
-//      boardSize  :state.boardSize,
-//      boardState :state.boardState
-//      //now boardSize and boardState are available as this.props.boardSize and this.props.boardState
-//      
-//    };
-//  }
-//)(Board);

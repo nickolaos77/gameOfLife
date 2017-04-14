@@ -36,15 +36,13 @@ var newArray = [...Array(1500)].map( ()=>{
 } );
 
 store.dispatch(actions.showSmallBoardAG());
-
 store.dispatch(actions.nextGenAG(newArray,50));
-store.dispatch(actions.nextGenAG(undefined,50));
+//store.dispatch(actions.nextGenAG(undefined,50));
 
-var counter = 0
-setInterval( function(){
-  counter++;
-  
-  store.dispatch(actions.nextGenAG(undefined,50));}, 10 )
+//var counter = 0
+//setInterval( function(){
+//  counter++;
+//  store.dispatch(actions.nextGenAG(undefined,50));}, 10 )
 
 
 

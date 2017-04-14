@@ -15,7 +15,7 @@ class BoardCellList extends React.Component{
   squareCreator = (numOfSquares,className) => {
     return [...Array(numOfSquares)].map((x,i)=>{
           if (i==1000){console.log("I just updated")}
-           return (<Square key={i} className={className}/>) 
+           return (<Square key={i} id={i} className={className} />) 
           })
   }
     render(){
@@ -27,5 +27,6 @@ class BoardCellList extends React.Component{
     }
 
 }
+
 
 export default BoardCellList;

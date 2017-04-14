@@ -46,7 +46,6 @@ class LivingCellsList extends React.Component{
 module.exports = connect(
   (state)=>{
     return{
-      
       boardState :state.boardState
       //now boardSize and boardState are available as this.props.boardSize and this.props.boardState
       

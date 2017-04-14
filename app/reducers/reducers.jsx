@@ -44,28 +44,64 @@ export const crudRecReducer = (state = [], action)=>{
     };   
 };
 
+function intervalCreator (timeStep,dispatch,actionGenerator){
+  var myInterval = setInterval( (timeStep)=>{
+  dispatch(actionGenerator(undefined,50))}, timeStep )
+  return myInterval;
+}
+
+var intervalState = {
+  intervalRunning:'No',
+  currentInterval:"None",
+  timeStep:100,
+  intervalCreator}
+
 //Activity state reducer 
 //--------------
-export const activityReducer = (state = 'active', action)=>{
+export const intervalReducer = (state = intervalState, action)=>{
   switch (action.type){
     case 'RUN': 
-      return 'RUNNING';
+      return {intervalRunning:'Yes',currentInterval:action.currentInterval,timeStep:action.timeStep, intervalCreator};
     case 'PAUSE':
-      return 'PAUSED';
+      var intervalToBeCleared = state.currentInterval
+      clearInterval(intervalToBeCleared);
+      return {intervalRunning:'No',intervalCreator, currentInterval:"None",timeStep:action.timeStep};
+    default:
+      return state;
+  }
+}
+
+//Generations counter reducer
+//---------------------------
+
+export const gererationsCountingReducer = (state=0, action) =>{
+  switch(action.type){
+    case "INCREMENT":
+      return state + 1 ;
+    case "INITIALIZE":
+      return 0;
+    default:
+      return state; 
   }
 }
 
 
 //Next state reducer 
 //--------------
-
 export const newGenerationReducer = (state=[], action) => {
   switch (action.type){
-      case 'CREATE_THE_NEXT_GEN':        
+      case 'CREATE_THE_NEXT_GEN':
           if (action.boardState){  
             return improvedStateCreator(action.boardState,action.numOfCols)}
           else {return improvedStateCreator(state,action.numOfCols)}  
-          
+      case 'INSERT_LIVING_CELL':
+          var newState = [...state];
+              newState[action.cellIndex] = 1;
+           return newState;
+      case 'CLEAR_THE_BOARD':
+          // I create an array filled with zeros because with nulls it didn't work
+          var newState = Array.apply(null, new Array(1500)).map(Number.prototype.valueOf,0); 
+          return newState;
       default:
           return state;   
 }
@@ -89,3 +125,4 @@ switch (action.type){
             return state;
 }
 }
+

@@ -1,50 +1,28 @@
-//C.R.U.D. action generators
-//---------------------------------------
-
-export const addRecAG = (recipeName, ingredients) =>{
-    return {
-        type: 'ADD_RECIPE',
-        recipeName,
-        ingredients
-    }
-}
-
-export const addRecipesAG = (recipes)=>{
-  console.log("Action generator", recipes)
+//Generation counter action generators
+//--------------------------------------
+export const incrementAG = ()=>{
   return {
-    type:'ADD_RECIPES',
-    recipes
-  }
+    type: "INCREMENT"
+  };
 }
-
-
-export const delRecAG = (recipeIndex) =>{
-    return {
-        type: 'DEL_RECIPE',
-        recipeIndex
-    }
+export const initializeAG = ()=>{
+  return {
+    type: "INITIALIZE"
+  };
 }
-
-export const editRecAG = (recipeName, ingredients, recipeIndex) =>{
-    return {
-        type:'EDIT_RECIPE',
-        recipeName,
-        ingredients, 
-        recipeIndex
-    }
-}
-
-
 //Run/Pause action generators
 //---------------------------------------
-export const runAG = () =>{
-  return {type:"RUN"}
+export const runAG = (currentInterval,timeStep) =>{
+  return {type:"RUN",
+          currentInterval,
+          timeStep
+         }
 }
 
-export const pauseAG = () =>{
-  return {type:"PAUSE"}
+export const pauseAG = (timeStep) =>{
+  return {type:"PAUSE",
+         timeStep}
 }
-
 
 //Next generation action generators
 //---------------------------------------
@@ -55,6 +33,20 @@ export const nextGenAG = (boardState,numOfCols) => {
         boardState,
         numOfCols
     }
+}
+
+export const insertLivingCellAG = ( cellIndex)=>{
+  return {
+      type:'INSERT_LIVING_CELL',
+      cellIndex
+  }
+}
+
+export const boardClearerAG = ()=>{
+  return {
+      type:'CLEAR_THE_BOARD',
+      
+  }
 }
 
 //Board selection action generators

@@ -1,11 +1,12 @@
 var redux = require('redux');
-import {boardSizeReducer, newGenerationReducer} from './../reducers/reducers'; 
+import {boardSizeReducer, newGenerationReducer, intervalReducer, gererationsCountingReducer} from './../reducers/reducers'; 
 
 export const configure =()=>{
 const reducer = redux.combineReducers({
-    boardSize :  boardSizeReducer,
-    boardState:  newGenerationReducer,
-    activity  :  activityReducer
+    boardSize   :  boardSizeReducer,
+    boardState  :  newGenerationReducer,
+    myInterval  :  intervalReducer,
+    generations :  gererationsCountingReducer
     //recipes   :  crudRecReducer,
 });
  
