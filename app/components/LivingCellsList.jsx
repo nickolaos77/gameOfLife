@@ -1,8 +1,7 @@
 import React  from 'react' ;
 import Square from './Square.jsx';
 import { connect } from 'react-redux';
-
-
+const actions   = require('../actions/actions.jsx');
 
 class LivingCellsList extends React.Component{
   constructor(props){
@@ -10,10 +9,10 @@ class LivingCellsList extends React.Component{
     
   this.youngCells = this.youngCells.bind(this);  
   }
- 
-  componentWillMount() {
-		console.log('Component is mounting...');
-	}
+  
+  componentDidUpdate(){
+    if (this.props.boardActive=="Yes") this.props.dispatch(actions.incrementAG());
+  }
   
  // return (<div key={i} className={className}></div>)
   //for the small board 50*30
@@ -46,7 +45,8 @@ class LivingCellsList extends React.Component{
 module.exports = connect(
   (state)=>{
     return{
-      boardState :state.boardState
+      boardState  :state.boardState,
+      boardActive :state.myInterval.intervalRunning 
       //now boardSize and boardState are available as this.props.boardSize and this.props.boardState
       
     };

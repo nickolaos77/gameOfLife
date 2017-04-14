@@ -22741,6 +22741,8 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	var actions = __webpack_require__(211);
+
 	var LivingCellsList = function (_React$Component) {
 	  _inherits(LivingCellsList, _React$Component);
 
@@ -22754,9 +22756,9 @@
 	  }
 
 	  _createClass(LivingCellsList, [{
-	    key: 'componentWillMount',
-	    value: function componentWillMount() {
-	      console.log('Component is mounting...');
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate() {
+	      if (this.props.boardActive == "Yes") this.props.dispatch(actions.incrementAG());
 	    }
 
 	    // return (<div key={i} className={className}></div>)
@@ -22793,7 +22795,8 @@
 
 	module.exports = (0, _reactRedux.connect)(function (state) {
 	  return {
-	    boardState: state.boardState
+	    boardState: state.boardState,
+	    boardActive: state.myInterval.intervalRunning
 	    //now boardSize and boardState are available as this.props.boardSize and this.props.boardState
 
 	  };

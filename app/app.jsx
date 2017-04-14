@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import { connect } from 'react-redux';
 import ReactRedux from 'react-redux';
 const redux = require('redux');
 const actions = require('./actions/actions.jsx');
