@@ -14,6 +14,8 @@ componentDidMount() {
   this.intervalStarter();
 }  
   
+
+  
 intervalStarter(){
   if (this.props.myInterval.intervalRunning=='No'){
     

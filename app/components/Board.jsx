@@ -1,9 +1,7 @@
 import React            from 'react' ;
-import { connect }      from 'react-redux';
 import BoardCellList    from './BoardCellList.jsx'; 
 import LivingCellsList  from './LivingCellsList.jsx';
 import Square from './Square.jsx';
-const actions = require('../actions/actions.jsx');
 
 class Board extends React.Component{
   constructor(props){

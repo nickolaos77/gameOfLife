@@ -47,15 +47,16 @@ speedChanger(timeStep){
   render(){
   return (
      <div id="bottomButtons">
+      {/*
       <span className="textColor marginLeft20 noTopMargin"> Board Size:</span>
       <button className="buttonBottom" onClick={this.showSmallBoard}>Size:50x30</button>
       <button className="buttonBottom" onClick={this.showMediumBoard}>Size:70x50</button>
       <button className="buttonBottom" onClick={this.showBigBoard}>Size:100x80</button>
-     
+     */}
         <span className="textColor marginLeft20 noTopMargin"> Sim Speed:</span>
         <button className="buttonBottom" onClick={()=>{  this.speedChanger(1500) }}>Slow</button>
         <button className="buttonBottom " onClick={()=>{ this.speedChanger(500) }}>Medium</button>
-        <button className="buttonBottom " onClick={()=>{ this.speedChanger(50) }}>Fast</button>
+        <button className="buttonBottom " onClick={()=>{ this.speedChanger(100) }}>Fast</button>
       
     </div>
   

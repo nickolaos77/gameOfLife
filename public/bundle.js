@@ -22380,8 +22380,6 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	//import RecipeApp  from './RecipeApp.jsx';
-
 
 	var Buttons_And_Board_Cont = function (_React$Component) {
 	  _inherits(Buttons_And_Board_Cont, _React$Component);
@@ -22435,8 +22433,6 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactRedux = __webpack_require__(180);
-
 	var _BoardCellList = __webpack_require__(209);
 
 	var _BoardCellList2 = _interopRequireDefault(_BoardCellList);
@@ -22458,8 +22454,6 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var actions = __webpack_require__(211);
 
 	var Board = function (_React$Component) {
 	  _inherits(Board, _React$Component);
@@ -22530,8 +22524,6 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	//import BoardCellList    from './BoardCellList.jsx'; 
-
 
 	var actions = __webpack_require__(211);
 
@@ -23004,26 +22996,6 @@
 	        _react2.default.createElement(
 	          'span',
 	          { className: 'textColor marginLeft20 noTopMargin' },
-	          ' Board Size:'
-	        ),
-	        _react2.default.createElement(
-	          'button',
-	          { className: 'buttonBottom', onClick: this.showSmallBoard },
-	          'Size:50x30'
-	        ),
-	        _react2.default.createElement(
-	          'button',
-	          { className: 'buttonBottom', onClick: this.showMediumBoard },
-	          'Size:70x50'
-	        ),
-	        _react2.default.createElement(
-	          'button',
-	          { className: 'buttonBottom', onClick: this.showBigBoard },
-	          'Size:100x80'
-	        ),
-	        _react2.default.createElement(
-	          'span',
-	          { className: 'textColor marginLeft20 noTopMargin' },
 	          ' Sim Speed:'
 	        ),
 	        _react2.default.createElement(
@@ -23043,7 +23015,7 @@
 	        _react2.default.createElement(
 	          'button',
 	          { className: 'buttonBottom ', onClick: function onClick() {
-	              _this3.speedChanger(50);
+	              _this3.speedChanger(100);
 	            } },
 	          'Fast'
 	        )

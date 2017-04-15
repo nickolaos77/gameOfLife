@@ -1,6 +1,5 @@
 import React            from 'react' ;
-import { connect }      from 'react-redux';
-//import BoardCellList    from './BoardCellList.jsx'; 
+import { connect }      from 'react-redux'; 
 import Square from './Square.jsx';
 const actions = require('../actions/actions.jsx');
 
